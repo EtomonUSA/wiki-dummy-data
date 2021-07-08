@@ -1,0 +1,189 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>@etomon/wiki-dummy-data</title>
+	<meta name="description" content="Documentation for @etomon/wiki-dummy-data">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">@etomon/wiki-dummy-data</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1>@etomon/wiki-dummy-data</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<a href="#io-redis-down" id="io-redis-down" style="color: inherit; text-decoration: none;">
+					<h1>IO Redis Down</h1>
+				</a>
+				<p>This repository is a very simple implementation of <a href="https://github.com/Level/abstract-leveldown"><code>abstract-leveldown</code></a> using <a href="https://github.com/luin/ioredis"><code>ioredis</code></a> (redis) as the data store.</p>
+				<p>I couldn&#39;t get <a href="https://github.com/hmalphettes/redisdown"><code>redis-down</code></a> to function properly and figured the <a href="https://github.com/Level/abstract-leveldown"><code>abstract-leveldown</code></a> API was simple enough to re-implement.</p>
+				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+					<h2>Usage</h2>
+				</a>
+				<pre><code>  <span class="hljs-keyword">const</span> { IORedisDown } = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;@etomon/ioredisdown&#x27;</span>);
+  <span class="hljs-keyword">const</span> Redis = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;ioredis&#x27;</span>);
+  <span class="hljs-keyword">const</span> levelup = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;levelup&#x27;</span>);
+  
+  <span class="hljs-comment">//  A connection string</span>
+  <span class="hljs-keyword">let</span> db = levelup(<span class="hljs-keyword">new</span> IORedisDown(<span class="hljs-string">&#x27;blah&#x27;</span>), <span class="hljs-string">&#x27;redis://localhost:6379&#x27;</span>);
+  
+  <span class="hljs-comment">// As an object containing settings</span>
+  db = levelup(<span class="hljs-keyword">new</span> IORedisDown(<span class="hljs-string">&#x27;blah&#x27;</span>), {
+    <span class="hljs-attr">host</span>: <span class="hljs-string">&#x27;127.0.0.1&#x27;</span>,
+    <span class="hljs-attr">port</span>: <span class="hljs-number">6379</span>
+  });
+  
+  <span class="hljs-comment">// Pass your own redis</span>
+  <span class="hljs-keyword">const</span> redis = <span class="hljs-keyword">new</span> Redis(<span class="hljs-number">6379</span>, <span class="hljs-string">&#x27;127.0.0.1&#x27;</span>);
+  
+  db = levelup(<span class="hljs-keyword">new</span> IORedisDown(<span class="hljs-string">&#x27;blah&#x27;</span>), {
+    <span class="hljs-attr">redis</span>: redis
+  });
+</code></pre>
+				<a href="#options" id="options" style="color: inherit; text-decoration: none;">
+					<h2>Options</h2>
+				</a>
+				<p>The options (second) parameter in <code>levelup</code> gets passed directly to the constructor of IORedis.</p>
+				<p>If an array is passed it will spread the array elements across the constructor.</p>
+				<p>So <code>db = levelup(new IORedisDown(&#39;blah&#39;), [ 6379, &#39;127.0.0.1&#39; ])</code></p>
+				<p>and </p>
+				<pre><code><span class="hljs-attribute">  const redis</span> = new Redis(6379, <span class="hljs-string">&#x27;127.0.0.1&#x27;</span>);
+  
+<span class="hljs-attribute">  db</span> = levelup(new IORedisDown(<span class="hljs-string">&#x27;blah&#x27;</span>), {
+    redis: redis
+  });
+</code></pre>
+				<p>Are equivalent</p>
+				<a href="#encoding" id="encoding" style="color: inherit; text-decoration: none;">
+					<h2>Encoding</h2>
+				</a>
+				<p>I didn&#39;t have time to figure out how <code>encoding-down</code> works so encoding/decoding is currently handled by [`@etomon/encode-tools](<a href="https://github.com/EtomonUSA/encode-tools">https://github.com/EtomonUSA/encode-tools</a>).</p>
+				<p>Crucially, data will be serialized as <a href="https://npmjs.org/@msgpack/msgpack"><code>msgpack</code></a> by default. Keys will be serialized as JSON, then hashed using <a href="https://npmjs.org/xxhash-addon">xxhash3</a>.</p>
+				<p>The second argument of the <code>IORedisDown</code> constructor can be used to configure the <code>EncodeTools</code> instance.</p>
+				<p>At present, the hashing algorithm must be <code>xxhash3</code>.</p>
+				<p>By default, these are the settings </p>
+				<pre><code>const DEFAULT_ENCODING_OPTIONS: EncodingOptions = {
+  <span class="hljs-comment">// If Buffers need to be encoded as string they will be encoded as base64</span>
+  binaryEncoding: <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">BinaryEncoding</span>.</span></span>base64,
+  <span class="hljs-comment">// * This is ignored, must be xxhash3 *</span>
+  hashAlgorithm: <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">HashAlgorithm</span>.</span></span>xxhash3,
+  <span class="hljs-comment">// By default will store data as msgpack</span>
+  serializationFormat: <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">SerializationFormat</span>.</span></span>msgpack,
+  <span class="hljs-comment">// Not used</span>
+  uniqueIdFormat: <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">IDFormat</span>.</span></span>uuidv4String
+}
+</code></pre>
+				<a href="#building" id="building" style="color: inherit; text-decoration: none;">
+					<h2>Building</h2>
+				</a>
+				<p><code>@etomon/ioredisdown</code> is written in TypeScript, to build run <code>npm run build</code>.</p>
+				<a href="#documentation" id="documentation" style="color: inherit; text-decoration: none;">
+					<h2>Documentation</h2>
+				</a>
+				<p>Documentation can be <a href="https://etomonusa.github.io/ioredisdown">found here</a>.</p>
+				<a href="#license" id="license" style="color: inherit; text-decoration: none;">
+					<h2>License</h2>
+				</a>
+				<p>Etomon IORedisDown is licensed under the GNU LGPL-3.0, a copy of which can be found at <a href="https://www.gnu.org/licenses/">https://www.gnu.org/licenses/</a>.</p>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_record_.html">&quot;<wbr>Record&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_wikidummydatacreator_.html">&quot;<wbr>Wiki<wbr>Dummy<wbr>Data<wbr>Creator&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_index_.html">&quot;index&quot;</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
