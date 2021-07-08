@@ -1,6 +1,6 @@
 {
     "name": "@etomon/wiki-dummy-data",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "Tool for scraping dummy data from wikipedia for future project use",
     "main": "lib/index.js",
     "contributors": [
