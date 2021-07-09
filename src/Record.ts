@@ -1,4 +1,4 @@
-import {
+import EncodeToolsNative, {
   CompressionFormat,
   EncodeToolsNative as EncodeTools,
   EncodingOptions,
@@ -46,17 +46,25 @@ export interface RecordEnvelope {
 
 }
 
+export const DEFAULT_RECORD_ENCODE_OPTIONS: EncodingOptions= {
+  compressionFormat: CompressionFormat.lzma,
+  hashAlgorithm: HashAlgorithm.xxhash3,
+  serializationFormat: SerializationFormat.msgpack,
+  uniqueIdFormat: IDFormat.uuidv4String,
+  imageFormat: ImageFormat.jpeg
+}
+
 export const DEFAULT_RECORD_OPTIONS: RecordOptions = {
-  encodeOptions: {
-    compressionFormat: CompressionFormat.zstd,
-    hashAlgorithm: HashAlgorithm.xxhash3,
-    serializationFormat: SerializationFormat.msgpack,
-    uniqueIdFormat: IDFormat.uuidv4String,
-    imageFormat: ImageFormat.jpeg
-  },
+  encodeOptions: DEFAULT_RECORD_ENCODE_OPTIONS,
   imageSize: {
     width: 300
   }
+}
+
+export function defaultEncoder(): EncodeTools {
+  return new EncodeToolsNative(
+    DEFAULT_RECORD_OPTIONS.encodeOptions
+  )
 }
 
 export class Record {
@@ -93,7 +101,7 @@ export class Record {
 
   public static async recordFromWikiSummary(summary: wikiSummary, {
     loadImage: boolean = true,
-    encoder = EncodeTools.WithDefaults,
+    encoder = defaultEncoder(),
     imageSize = DEFAULT_RECORD_OPTIONS.imageSize
   }): Promise<RecordData> {
     let data: RecordData = {
@@ -155,20 +163,20 @@ export class Record {
     return this._data;
   }
 
-  public static async serializeData(record: RecordData, encoder: EncodeTools = EncodeTools.WithDefaults): Promise<Buffer> {
+  public static async serializeData(record: RecordData, encoder: EncodeTools = defaultEncoder()): Promise<Buffer> {
     let pojo = await Record.preSerializeData(record, encoder);
 
     return Buffer.from(encoder.serializeObject(pojo));
   }
 
-  public static async deserializeData(buf: Buffer, encoder: EncodeTools = EncodeTools.WithDefaults): Promise<RecordData> {
+  public static async deserializeData(buf: Buffer, encoder: EncodeTools = defaultEncoder()): Promise<RecordData> {
     let pojo: SerializedRecordData = encoder.deserializeObject(buf);
 
     return Record.postDeserializeData(pojo, encoder);
   }
 
 
-  public static async preSerializeData(record: RecordData|Record, encoder: EncodeTools = EncodeTools.WithDefaults): Promise<SerializedRecordData> {
+  public static async preSerializeData(record: RecordData|Record, encoder: EncodeTools = defaultEncoder()): Promise<SerializedRecordData> {
     if (record instanceof Record) {
       if (!record.page)
         await record.load();
@@ -191,7 +199,7 @@ export class Record {
     }
   }
 
-  public static async postDeserializeData(buf: SerializedRecordData, encoder: EncodeTools = EncodeTools.WithDefaults): Promise<RecordData> {
+  public static async postDeserializeData(buf: SerializedRecordData, encoder: EncodeTools = defaultEncoder()): Promise<RecordData> {
     let decompressedBuf = await encoder.decompress(buf.text, encoder.options.compressionFormat);
     let text = encoder.deserializeObject<RecordData>(decompressedBuf, SerializationFormat.json);
     text.blobs = buf.blobs;

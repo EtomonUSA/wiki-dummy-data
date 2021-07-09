@@ -3,7 +3,7 @@ import {NavboxParser, NavboxParserOptions} from '@etomon/wiki-navbox-parser';
 import {EncodeToolsNative} from "@etomon/encode-tools";
 import * as _ from 'lodash';
 export class WikiDummyDataCreator {
-  constructor(protected recordOptions?: RecordOptions, protected navboxOptions?: NavboxParserOptions, protected asyncCrawl: boolean = false) {
+  constructor(public recordOptions?: RecordOptions, protected navboxOptions?: NavboxParserOptions, protected asyncCrawl: boolean = false) {
 
   }
 
