@@ -9,8 +9,26 @@ import EncodeToolsNative, {
 } from "@etomon/encode-tools/lib/EncodeToolsNative";
 import wikipedia from 'wikipedia';
 import Page from "wikipedia/dist/page";
-import {wikiSummary} from "wikipedia/dist/resultTypes";
+import {imageResult, mediaResult, wikiSummary} from "wikipedia/dist/resultTypes";
 import fetch from 'node-fetch';
+
+export interface RecordLoadOptions {
+  loadContent?: boolean;
+  imagesToLoad?: number;
+  // mediaToLoad?: number;
+}
+
+export const DEFAULT_RECORD_LOAD_OPTIONS: RecordLoadOptions = {
+  imagesToLoad: 1,
+  loadContent: false
+  // ,mediaToLoad: 0
+}
+
+export interface RecordBlob {
+  blob: Buffer;
+  contentType: string;
+  name:string;
+}
 
 export interface RecordData {
   id: number;
@@ -24,14 +42,20 @@ export interface RecordData {
     latitude: number
   },
   blobs?: {
-    image?: Buffer;
-  }
+    mainImage?: RecordBlob;
+    [name: string]: RecordBlob;
+  },
+  name?: string;
+  start?: number,
+  end?: number,
+  infobox?: any;
 }
 
 export interface SerializedRecordData {
   text: Buffer;
   blobs: {
-    [name: string]: Buffer
+    mainImage?: RecordBlob;
+    [name: string]: RecordBlob;
   }
 }
 
@@ -99,14 +123,14 @@ export class Record {
     return Boolean(this._data?.title && this._data?.description);
   }
 
-  public static async recordFromWikiSummary(summary: wikiSummary, {
+  public static async recordFromWikiSummary(summary: wikiSummary, url: string, {
     loadImage: boolean = true,
     encoder = defaultEncoder(),
-    imageSize = DEFAULT_RECORD_OPTIONS.imageSize
+    imageSize= DEFAULT_RECORD_OPTIONS.imageSize
   }): Promise<RecordData> {
     let data: RecordData = {
       id: summary.pageid,
-      url: summary.content_urls.desktop.page,
+      url,
       title: summary.title,
       extract: summary.extract,
       description: summary.description
@@ -116,36 +140,145 @@ export class Record {
     }
 
     let imageUrl = summary.originalimage?.source;
+    // try {
     if (imageUrl) {
-      let imageResp: any;
-      try {
-        imageResp = await fetch(imageUrl);
-        let imageBuf = await (imageResp).arrayBuffer();
-        data.blobs = {image: await encoder.resizeImage(imageBuf, imageSize)};
-      } catch (err) {
-        console.warn(err.stack);
-      }
+      await Record.addMedia({
+        _data: data,
+        encoder: encoder,
+        options: {
+          imageSize,
+          encodeOptions: encoder.options
+        },
+      }, imageUrl, 'mainImage');
     }
+    // }
+    //  catch (err) {
+    //   console.warn(err.stack);
+    // }
 
     return data;
   }
 
-  async load(loadContent: boolean = false): Promise<void> {
-    let page;
-    if (!this.hasSummary) {
-      page = await wikipedia.page(this.pageId);
-      let summary = await page.summary();
-      this._data = await Record.recordFromWikiSummary(summary, {
-        loadImage: true,
-        imageSize: this.options.imageSize,
-        encoder: this.encoder
-      });
+  async addMedia(url: string, name: string, contentType?: string): Promise<RecordBlob> {
+    return Record.addMedia({
+      options: this.options,
+      encoder: this.encoder,
+      _data: this._data
+    }, url, name, contentType);
+  }
+
+  static async addMedia(_this: { _data: RecordData, encoder: EncodeTools, options: RecordOptions }, url: string, name: string, contentType?: string): Promise<RecordBlob> {
+    const resp = await fetch(url);
+    let blob: Buffer = Buffer.from(await (resp).arrayBuffer());
+    if (resp.headers.has('content-type') && resp.headers.get('content-type').indexOf('image/') !== -1) {
+      contentType = `image/${_this.encoder.options.imageFormat.replace('jpg', 'jpeg').toLowerCase()}`;
+      blob = await _this.encoder.resizeImage(blob, _this.options.imageSize);
     }
 
-    if (loadContent && !this.hasContent) {
-      page = page || await wikipedia.page(this.pageId);
-      this._data.content = await page.content();
+    const delta = {
+      name,
+      blob,
+      contentType: contentType || resp.headers.get('content-type')
+    };
+
+    _this._data.blobs = {
+      ...(_this._data.blobs || {}),
+      [name]: delta
     }
+
+    return delta;
+  }
+
+
+  public static parseInfobox(infobox: any, summary: any) {
+    // Try to get a name
+    // For a modern name try splitting the name field or title
+    // (e.g., Jovenel Moïse)
+    let name: string = (infobox.name || summary.title);
+    // For start/end dates look for birthDate and deathDate (people) or start/end (not people)
+    let startish = infobox.birthDate?.date || infobox.birthDate || infobox.start?.date || infobox.start;
+    let endish = infobox.deathDate?.date || infobox.deathDate || infobox.end?.date || infobox.end;
+    let start: number|undefined = startish ? (new Date(startish)).getTime() : void(0);
+    let end: number|undefined = endish ? (new Date(endish)).getTime() : void(0);
+
+    return {
+      name,
+      start,
+      end,
+      infobox
+    }
+  }
+
+  async load(loadOptions?: RecordLoadOptions): Promise<RecordData>
+  async load(loadContent?: boolean): Promise<RecordData>
+  async load(loadOptions: boolean|RecordLoadOptions|undefined = DEFAULT_RECORD_LOAD_OPTIONS): Promise<RecordData> {
+    let page: Page;
+
+    if (typeof(loadOptions) === 'boolean') {
+      loadOptions = {
+        ...DEFAULT_RECORD_LOAD_OPTIONS,
+        loadContent: loadOptions
+      }
+    }
+
+    const loadOpts = loadOptions as RecordLoadOptions;
+
+    if (!this.hasSummary) {
+      page = await wikipedia.page(this.pageId);
+      let promises: Promise<any>[] = [
+        page.summary()
+          .then((summary) => {
+            return Record.recordFromWikiSummary(summary, page.fullurl,{
+              loadImage: Boolean(loadOpts.imagesToLoad),
+              imageSize: this.options.imageSize,
+              encoder: this.encoder
+            })
+          }),
+        page.infobox({redirect: true })
+      ];
+
+      promises.push(loadOpts.imagesToLoad > 1 ? page.images({ limit: loadOpts.imagesToLoad - 1, redirect: true }) : Promise.resolve(null));
+
+      // if (loadOpts.mediaToLoad > 0) {
+      //   promises.push(page.media({redirect: true}));
+      // }
+
+      if (loadOpts.loadContent) {
+        promises.push(page.content().then((r) =>  (!r) ? page.intro() : r));
+      }
+
+      let [
+        summaryData,
+        infobox,
+        images,
+        // ,media
+        content
+      ] = await Promise.all(promises);
+
+      if (images) {
+        let theImages = [].concat((images as imageResult[]));
+        for (const image of theImages) {
+          if (!image.url)
+            continue;
+          await this.addMedia(image.url, image.ns+'');
+        }
+      }
+
+      // if (media) {
+      //   for (const article of (media as mediaResult[])) {
+      //     article.
+      //     await this.addMedia(image.url, image.pageid+'');
+      //   }
+      // }
+
+      this._data = {
+        ...summaryData,
+        content,
+        ...(Record.parseInfobox(infobox, summaryData))
+      };
+    }
+
+     return this._data;
   }
 
   protected _data: RecordData|null;

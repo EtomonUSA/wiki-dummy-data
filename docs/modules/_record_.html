@@ -79,8 +79,10 @@
 						<section class="tsd-index-section ">
 							<h3>Interfaces</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/_record_.recordblob.html" class="tsd-kind-icon">Record<wbr>Blob</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/_record_.recorddata.html" class="tsd-kind-icon">Record<wbr>Data</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/_record_.recordenvelope.html" class="tsd-kind-icon">Record<wbr>Envelope</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/_record_.recordloadoptions.html" class="tsd-kind-icon">Record<wbr>Load<wbr>Options</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/_record_.recordoptions.html" class="tsd-kind-icon">Record<wbr>Options</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/_record_.serializedrecorddata.html" class="tsd-kind-icon">Serialized<wbr>Record<wbr>Data</a></li>
 							</ul>
@@ -101,6 +103,7 @@
 							<h3>Object literals</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-object-literal tsd-parent-kind-module"><a href="_record_.html#default_record_encode_options" class="tsd-kind-icon">DEFAULT_<wbr>RECORD_<wbr>ENCODE_<wbr>OPTIONS</a></li>
+								<li class="tsd-kind-object-literal tsd-parent-kind-module"><a href="_record_.html#default_record_load_options" class="tsd-kind-icon">DEFAULT_<wbr>RECORD_<wbr>LOAD_<wbr>OPTIONS</a></li>
 								<li class="tsd-kind-object-literal tsd-parent-kind-module"><a href="_record_.html#default_record_options" class="tsd-kind-icon">DEFAULT_<wbr>RECORD_<wbr>OPTIONS</a></li>
 							</ul>
 						</section>
@@ -115,7 +118,7 @@
 					<div class="tsd-signature tsd-kind-icon">Image<wbr>Size<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>height<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>width<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">{ </span>height<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>width<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">{ </span>height<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>width<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/EtomonUSA/wiki-dummy-data/blob/067f474/src/Record.ts#L38">Record.ts:38</a></li>
+							<li>Defined in <a href="https://github.com/EtomonUSA/wiki-dummy-data/blob/1ea3ee5/src/Record.ts#L57">Record.ts:57</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -132,7 +135,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/EtomonUSA/wiki-dummy-data/blob/067f474/src/Record.ts#L64">Record.ts:64</a></li>
+									<li>Defined in <a href="https://github.com/EtomonUSA/wiki-dummy-data/blob/1ea3ee5/src/Record.ts#L83">Record.ts:83</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">EncodeTools</span></h4>
@@ -148,7 +151,7 @@
 					<div class="tsd-signature tsd-kind-icon">DEFAULT_<wbr>RECORD_<wbr>ENCODE_<wbr>OPTIONS<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/EtomonUSA/wiki-dummy-data/blob/067f474/src/Record.ts#L49">Record.ts:49</a></li>
+							<li>Defined in <a href="https://github.com/EtomonUSA/wiki-dummy-data/blob/1ea3ee5/src/Record.ts#L68">Record.ts:68</a></li>
 						</ul>
 					</aside>
 					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
@@ -157,7 +160,7 @@
 						<div class="tsd-signature tsd-kind-icon">compression<wbr>Format<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">lzma</span><span class="tsd-signature-symbol"> = CompressionFormat.lzma</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/EtomonUSA/wiki-dummy-data/blob/067f474/src/Record.ts#L50">Record.ts:50</a></li>
+								<li>Defined in <a href="https://github.com/EtomonUSA/wiki-dummy-data/blob/1ea3ee5/src/Record.ts#L69">Record.ts:69</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -167,7 +170,7 @@
 						<div class="tsd-signature tsd-kind-icon">hash<wbr>Algorithm<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">xxhash3</span><span class="tsd-signature-symbol"> = HashAlgorithm.xxhash3</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/EtomonUSA/wiki-dummy-data/blob/067f474/src/Record.ts#L51">Record.ts:51</a></li>
+								<li>Defined in <a href="https://github.com/EtomonUSA/wiki-dummy-data/blob/1ea3ee5/src/Record.ts#L70">Record.ts:70</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -177,7 +180,7 @@
 						<div class="tsd-signature tsd-kind-icon">image<wbr>Format<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">jpeg</span><span class="tsd-signature-symbol"> = ImageFormat.jpeg</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/EtomonUSA/wiki-dummy-data/blob/067f474/src/Record.ts#L54">Record.ts:54</a></li>
+								<li>Defined in <a href="https://github.com/EtomonUSA/wiki-dummy-data/blob/1ea3ee5/src/Record.ts#L73">Record.ts:73</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -187,7 +190,7 @@
 						<div class="tsd-signature tsd-kind-icon">serialization<wbr>Format<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">msgpack</span><span class="tsd-signature-symbol"> = SerializationFormat.msgpack</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/EtomonUSA/wiki-dummy-data/blob/067f474/src/Record.ts#L52">Record.ts:52</a></li>
+								<li>Defined in <a href="https://github.com/EtomonUSA/wiki-dummy-data/blob/1ea3ee5/src/Record.ts#L71">Record.ts:71</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -197,7 +200,37 @@
 						<div class="tsd-signature tsd-kind-icon">unique<wbr>IdFormat<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">uuidv4String</span><span class="tsd-signature-symbol"> = IDFormat.uuidv4String</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/EtomonUSA/wiki-dummy-data/blob/067f474/src/Record.ts#L53">Record.ts:53</a></li>
+								<li>Defined in <a href="https://github.com/EtomonUSA/wiki-dummy-data/blob/1ea3ee5/src/Record.ts#L72">Record.ts:72</a></li>
+							</ul>
+						</aside>
+					</section>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-module">
+					<a name="default_record_load_options" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> DEFAULT_<wbr>RECORD_<wbr>LOAD_<wbr>OPTIONS</h3>
+					<div class="tsd-signature tsd-kind-icon">DEFAULT_<wbr>RECORD_<wbr>LOAD_<wbr>OPTIONS<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/EtomonUSA/wiki-dummy-data/blob/1ea3ee5/src/Record.ts#L21">Record.ts:21</a></li>
+						</ul>
+					</aside>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="default_record_load_options.imagestoload" class="tsd-anchor"></a>
+						<h3>images<wbr>ToLoad</h3>
+						<div class="tsd-signature tsd-kind-icon">images<wbr>ToLoad<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 1</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/EtomonUSA/wiki-dummy-data/blob/1ea3ee5/src/Record.ts#L22">Record.ts:22</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="default_record_load_options.loadcontent" class="tsd-anchor"></a>
+						<h3>load<wbr>Content</h3>
+						<div class="tsd-signature tsd-kind-icon">load<wbr>Content<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> = false</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/EtomonUSA/wiki-dummy-data/blob/1ea3ee5/src/Record.ts#L23">Record.ts:23</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -208,7 +241,7 @@
 					<div class="tsd-signature tsd-kind-icon">DEFAULT_<wbr>RECORD_<wbr>OPTIONS<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/EtomonUSA/wiki-dummy-data/blob/067f474/src/Record.ts#L57">Record.ts:57</a></li>
+							<li>Defined in <a href="https://github.com/EtomonUSA/wiki-dummy-data/blob/1ea3ee5/src/Record.ts#L76">Record.ts:76</a></li>
 						</ul>
 					</aside>
 					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
@@ -217,7 +250,7 @@
 						<div class="tsd-signature tsd-kind-icon">encode<wbr>Options<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">EncodingOptions</span><span class="tsd-signature-symbol"> = DEFAULT_RECORD_ENCODE_OPTIONS</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/EtomonUSA/wiki-dummy-data/blob/067f474/src/Record.ts#L58">Record.ts:58</a></li>
+								<li>Defined in <a href="https://github.com/EtomonUSA/wiki-dummy-data/blob/1ea3ee5/src/Record.ts#L77">Record.ts:77</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -227,7 +260,7 @@
 						<div class="tsd-signature tsd-kind-icon">image<wbr>Size<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/EtomonUSA/wiki-dummy-data/blob/067f474/src/Record.ts#L59">Record.ts:59</a></li>
+								<li>Defined in <a href="https://github.com/EtomonUSA/wiki-dummy-data/blob/1ea3ee5/src/Record.ts#L78">Record.ts:78</a></li>
 							</ul>
 						</aside>
 						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
@@ -236,7 +269,7 @@
 							<div class="tsd-signature tsd-kind-icon">width<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 300</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/EtomonUSA/wiki-dummy-data/blob/067f474/src/Record.ts#L60">Record.ts:60</a></li>
+									<li>Defined in <a href="https://github.com/EtomonUSA/wiki-dummy-data/blob/1ea3ee5/src/Record.ts#L79">Record.ts:79</a></li>
 								</ul>
 							</aside>
 						</section>
@@ -267,10 +300,16 @@
 						<a href="../classes/_record_.record.html" class="tsd-kind-icon">Record</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/_record_.recordblob.html" class="tsd-kind-icon">Record<wbr>Blob</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
 						<a href="../interfaces/_record_.recorddata.html" class="tsd-kind-icon">Record<wbr>Data</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-module">
 						<a href="../interfaces/_record_.recordenvelope.html" class="tsd-kind-icon">Record<wbr>Envelope</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/_record_.recordloadoptions.html" class="tsd-kind-icon">Record<wbr>Load<wbr>Options</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-module">
 						<a href="../interfaces/_record_.recordoptions.html" class="tsd-kind-icon">Record<wbr>Options</a>
@@ -286,6 +325,9 @@
 					</li>
 					<li class=" tsd-kind-object-literal tsd-parent-kind-module">
 						<a href="_record_.html#default_record_encode_options" class="tsd-kind-icon">DEFAULT_<wbr>RECORD_<wbr>ENCODE_<wbr>OPTIONS</a>
+					</li>
+					<li class=" tsd-kind-object-literal tsd-parent-kind-module">
+						<a href="_record_.html#default_record_load_options" class="tsd-kind-icon">DEFAULT_<wbr>RECORD_<wbr>LOAD_<wbr>OPTIONS</a>
 					</li>
 					<li class=" tsd-kind-object-literal tsd-parent-kind-module">
 						<a href="_record_.html#default_record_options" class="tsd-kind-icon">DEFAULT_<wbr>RECORD_<wbr>OPTIONS</a>

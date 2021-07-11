@@ -1,4 +1,4 @@
-import {default as Record, RecordOptions, SerializedRecordData} from './Record';
+import {default as Record, RecordLoadOptions, RecordOptions, SerializedRecordData} from './Record';
 import {NavboxParser, NavboxParserOptions} from '@etomon/wiki-navbox-parser';
 import {EncodeToolsNative} from "@etomon/encode-tools";
 import * as _ from 'lodash';
@@ -24,7 +24,7 @@ export class WikiDummyDataCreator {
     );
   }
 
-  async* createCollection(collectionUrl: string, collectionName: string, readContent: boolean = false): AsyncGenerator<Record> {
+  async* createCollection(collectionUrl: string, collectionName: string, loadOptions: RecordLoadOptions): AsyncGenerator<Record> {
     const nav = await NavboxParser.fromUrl(collectionUrl, this.navboxOptions);
     const cols = nav.getCollections();
     let col = cols.get(collectionName);
@@ -45,7 +45,7 @@ export class WikiDummyDataCreator {
     let fn: any = async (str: string) => {
       try {
         let record = new Record(str, this.recordOptions);
-        await record.load(readContent);
+        await record.load(loadOptions);
 
         return record;
       } catch (err) {
